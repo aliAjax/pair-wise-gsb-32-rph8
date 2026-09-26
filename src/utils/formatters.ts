@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { SpotCategory } from '../constants/spot';
 import { TripStatus } from '../constants/trip';
+import type { PublishConflict } from '../types';
 
 export const spotCategoryText: Record<SpotCategory, string> = {
   [SpotCategory.NATURE]: '自然风光',
@@ -16,4 +17,11 @@ export const tripStatusText: Record<TripStatus, string> = {
 export const transportText: Record<string, string> = { walk: '步行', metro: '地铁', taxi: '出租', train: '火车' };
 export const formatDate = (value: string) => dayjs(value).format('YYYY-MM-DD');
 export const formatCurrency = (value: number, currency = 'CNY') => new Intl.NumberFormat('zh-CN', { style: 'currency', currency }).format(value);
+/** 发布冲突文案：指出哪一天、哪两个景点 */
+export function formatPublishConflict(conflict: PublishConflict) {
+  const where = `第 ${conflict.dayIndex} 天（${conflict.date}）`;
+  return conflict.type === 'duplicate'
+    ? `${where}：「${conflict.spotA}」重复出现，请删除其一`
+    : `${where}：「${conflict.spotA}」（${conflict.timeA}）与「${conflict.spotB}」（${conflict.timeB}）时间重叠`;
+}
 

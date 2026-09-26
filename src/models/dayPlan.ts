@@ -11,6 +11,9 @@ export interface DayPlan {
   trip_id: string;
   day_index: number;
   date: string;
+  /** 草稿：日常增删景点、调序、改时间都只改这里 */
   items: DayPlanItem[];
+  /** 已发布快照：分享页与费用统计展示这里，点「发布」后由草稿覆盖 */
+  published_items: DayPlanItem[];
 }
 
